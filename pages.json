@@ -1,0 +1,66 @@
+{
+   "easycom": {
+    	"^tn-(.*)": "@/tuniao-ui/components/tn-$1/tn-$1.vue"
+    },
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		},
+    {
+      "path": "pages/home/home",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false,
+        "navigationStyle": "custom" //不需要首页标题，自己在页面定义
+      }
+    },
+    {
+      "path": "pages/company/company",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/mine/mine",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    }
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+  "tabBar": {
+    "color": "#d8d8d8",
+    "selectedColor": "#FD7753",
+    "list": [
+      {
+        "text": "首页",
+        "pagePath": "pages/home/home",
+        "iconPath": "static/img/home_icon.png",
+        "selectedIconPath": "static/img/home_icon_act.png"
+      },
+      {
+        "text": "企业",
+        "pagePath": "pages/company/company",
+        "iconPath": "static/img/company_icon.png",
+        "selectedIconPath": "static/img/company_icon_act.png"
+      },
+      {
+        "text": "我的",
+        "pagePath": "pages/mine/mine",
+        "iconPath": "static/img/min_icon.png",
+        "selectedIconPath": "static/img/mine_icon_act.png"
+      }
+    ]
+  },
+	"uniIdRouter": {}
+}
