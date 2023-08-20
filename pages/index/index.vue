@@ -1,13 +1,13 @@
 <template>
 	<view class="flex justify-around margin">
-    <view class="">
+    <!-- <view class="">
       文本1
     </view>
     <view class="">
       文本1
     </view>
 	  <tn-button backgroundColor="#01BEFF" fontColor="#080808">自定义颜色按钮</tn-button>
-	  <tn-button backgroundColor="tn-bg-blue" fontColor="tn-color-white">自定义颜色按钮</tn-button>
+	  <tn-button backgroundColor="tn-bg-blue" fontColor="tn-color-white">自定义颜色按钮</tn-button> -->
 	</view>
 </template>
 
