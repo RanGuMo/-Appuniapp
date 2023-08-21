@@ -1,5 +1,5 @@
-<template>
-  <!-- 岗位组件 -->
+<!-- 岗位组件 -->
+<!-- <template>
   <view class="job-item padding-sm margin-bottom-sm" :class='cType'>
     <view class="flex justify-between align-center">
       <view class="flex align-center">
@@ -35,6 +35,42 @@
 
   </view>
 </template>
+ -->
+ <template>
+ 	<view class="job-item padding-sm margin-bottom-sm" :class="cType">
+ 		<view class="flex justify-between align-center">
+ 			<view class="flex align-center">
+ 				<image class="cu-avatar round  margin-right-sm" :src="jobdata.brandLogo" mode=""></image>
+ 				{{jobdata.brandName}}
+ 			</view>
+ 			<text class="iconfont icon-bookmark-o"></text>
+ 		</view>
+ 		<view class="margin-top-sm text-lg">
+ 			{{jobdata.jobName}}
+ 		</view>
+ 		<view class="margin-tb-xs text-grey">
+ 			{{jobdata.cityName}}·{{jobdata.areaDistrict}}
+ 		</view>
+ 		<view class="text-orange" v-if="cType=='hot'">
+ 			{{jobdata.salaryDesc}}
+ 		</view>
+ 		<view v-if="cType=='new'" >
+ 			<view class="cu-tag margin-bottom-xs margin-right-xs" v-for="item in jobdata.welfareList">
+ 				{{item}}
+ 			</view>
+ 		</view>
+ 		<view class="flex margin-top">
+ 			<view class="margin-right">
+ 				<text class="iconfont icon-browse margin-right-xs"></text>
+ 				100
+ 			</view>
+ 			<view class="">
+ 				<text class="iconfont icon-renqun margin-right-xs"></text>
+ 				50
+ 			</view>
+ 		</view>
+ 	</view>
+ </template>
 
 <script>
   export default {
@@ -47,6 +83,7 @@
           return ['hot','new'].includes(value) //ture 表示验证通过
         }
       },
+      jobdata:Object
     },
     data() {
       return {
@@ -61,6 +98,8 @@
     // width: 344upx;
     // height: 336upx;
     border: 1px solid #eeeeee;
+    border-radius: 6upx;
+    flex-shrink: 0;
   }
   .hot{
     width: 344upx;

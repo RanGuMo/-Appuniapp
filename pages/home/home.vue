@@ -52,9 +52,14 @@
       <text class="text-sm text-orange">查看更多</text>
     </view>
 
-    <view class="padding-sm flex flex-wrap justify-between">
+    <scroll-view scroll-x>
+      <view class="padding-sm flex justify-between">
+        <job-item v-for="item in jobList" :jobdata="item" class="margin-right-sm" />
+      </view>
+    </scroll-view>
+   <!-- <view class="padding-sm flex flex-wrap justify-between">
       <job-item v-for="item in 2" />
-    </view>
+    </view> -->
     <!-- 最新岗位 -->
     <view class="flex justify-between padding">
       <text>最新岗位</text>
@@ -62,7 +67,7 @@
     </view>
 
     <view class="padding-sm">
-      <job-item c-type='new' />
+      <job-item c-type="new" v-for="item in jobList" :jobdata="item" />
     </view>
 
   </view>
