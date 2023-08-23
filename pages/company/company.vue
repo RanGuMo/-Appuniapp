@@ -26,16 +26,27 @@
       this.fetchData()
     },
     onShow() {
-      uni.getStorage({
-        key: 'cateName',
-        success:({data}) => {
-          console.log(data,'提取',this);
-          this.jobList = []
-          this.page = 1
-          this.cateName = data
-          this.fetchData(data)
-        }
-      })
+      setTimeout(() => {
+        uni.getStorage({
+          key: 'cateName',
+          success: ({
+            data
+          }) => {
+            console.log(data, '提取', this);
+            this.jobList = []
+            this.page = 1
+            this.cateName = data
+            this.fetchData(data)
+          },
+          fail: (err) => {
+            this.jobList = []
+            this.page = 1
+            this.cateName = ''
+            this.fetchData()
+          }
+        })
+      }, 200) //定时器为了保证onTabItemTap先执行
+
     },
     // 下拉加载更多内容，触底就弹出提示
     onReachBottom() {
@@ -47,9 +58,15 @@
       this.page = 1;
       this.fetchData(); //1.1 调用获取数据的方法
     },
+    onTabItemTap() {
+      // 点击底部tab栏时触发
+      uni.removeStorage({
+        key: 'cateName'
+      })
+    },
     methods: {
       fetchData(name) {
-        jobGet(this.page,name).then(res => {
+        jobGet(this.page, name).then(res => {
           uni.stopPullDownRefresh() //1.3获取到数据后关闭下拉刷新
           let {
             results
