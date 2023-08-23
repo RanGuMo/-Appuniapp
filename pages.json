@@ -30,6 +30,14 @@
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/login/login",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false,
+        "navigationStyle": "custom" //不需要首页标题，自己在页面定义
+      }
     }
 	],
 	"globalStyle": {
