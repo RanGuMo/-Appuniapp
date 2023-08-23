@@ -21,7 +21,7 @@
       "path": "pages/company/company",
       "style": {
         "navigationBarTitleText": "",
-        "enablePullDownRefresh": false
+        "enablePullDownRefresh": true // 开启下拉刷新
       }
     },
     {

@@ -18,34 +18,43 @@
       }
     },
     onLoad() {
-      jobGet().then(res => {
-        this.jobList = res.data.results
-        this.page++
-      })
+      // jobGet().then(res => {
+      //   this.jobList = res.data.results
+      //   this.page++
+      // })
+      this.fetchData()
     },
     // 下拉加载更多内容，触底就弹出提示
     onReachBottom() {
       console.log('触底了');
-      jobGet(this.page).then(res => {
-        let {
-          results
-        } = res.data
-        if (results.length) {
-          this.jobList = [
-            ...this.jobList,
-            ...results
-          ]
-          this.page++
-          return
-        }
-        uni.showToast({
-          title: "没有更多数据了",
-          icon: 'none'
-        })
-      })
+      this.fetchData()
+    },
+    onPullDownRefresh() { //1.先在pages中开启下拉刷新功能
+      this.jobList = []
+      this.page = 1;
+      this.fetchData() //1.1 调用获取数据的方法
     },
     methods: {
-
+      fetchData() {
+        jobGet(this.page).then(res => {
+          uni.stopPullDownRefresh() //1.3获取到数据后关闭下拉刷新
+          let {
+            results
+          } = res.data
+          if (results.length) {
+            this.jobList = [
+              ...this.jobList,
+              ...results
+            ]
+            this.page++
+            return
+          }
+          uni.showToast({
+            title: "没有更多数据了",
+            icon: 'none'
+          })
+        })
+      }
     }
   }
 </script>
