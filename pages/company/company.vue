@@ -1,5 +1,11 @@
 <template>
   <view>
+    <!-- 没有获取到数据就展示这个 -->
+    <view class="padding margin" v-if="emptyShow">
+      <tn-empty mode="data" icon="https://tuniao.ahuaaa.cn/componentsPage/static/images/empty/data.jpg"
+        imgWidth="300"></tn-empty>
+    </view>
+    <!-- 获取到数据就展示下面这个 -->
     <view class="padding-sm flex flex-wrap justify-between">
       <job-item v-for="item in jobList" :jobdata="item" />
     </view>
@@ -15,7 +21,8 @@
       return {
         jobList: [],
         page: 1,
-        cateName: ''
+        cateName: '',
+        emptyShow: false, // 是否展示没有数据的图标
       }
     },
     onLoad() {
@@ -29,20 +36,29 @@
       setTimeout(() => {
         uni.getStorage({
           key: 'cateName',
-          success: ({
+          // success: ({
+          //   data
+          // }) => {
+          //   console.log(data, '提取', this);
+          //   this.jobList = []
+          //   this.page = 1
+          //   this.cateName = data
+          //   this.fetchData(data)
+          // },
+          // fail: (err) => {
+          //   this.jobList = []
+          //   this.page = 1
+          //   this.cateName = ''
+          //   this.fetchData()
+          // },
+          complete: ({
             data
-          }) => {
-            console.log(data, '提取', this);
+          }) => { //不管成功还是失败都会去执行，可以取代上面的success 和fail 
+            console.log('complete', data);
             this.jobList = []
             this.page = 1
             this.cateName = data
             this.fetchData(data)
-          },
-          fail: (err) => {
-            this.jobList = []
-            this.page = 1
-            this.cateName = ''
-            this.fetchData()
           }
         })
       }, 200) //定时器为了保证onTabItemTap先执行
@@ -71,7 +87,11 @@
           let {
             results
           } = res.data
+          if (this.page == 1 && results.length === 0) {
+            this.emptyShow = true //没有数据显示 图标
+          }
           if (results.length) {
+            this.emptyShow = false //有数据，关闭图标显示
             this.jobList = [
               ...this.jobList,
               ...results
