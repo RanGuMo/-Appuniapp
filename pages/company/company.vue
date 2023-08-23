@@ -3,7 +3,7 @@
     <!-- 没有获取到数据就展示这个 -->
     <view class="padding margin" v-if="emptyShow">
       <tn-empty mode="data" icon="https://tuniao.ahuaaa.cn/componentsPage/static/images/empty/data.jpg"
-        imgWidth="300"></tn-empty>
+        :imgWidth="300"></tn-empty>
     </view>
     <!-- 获取到数据就展示下面这个 -->
     <view class="padding-sm flex flex-wrap justify-between">

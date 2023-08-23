@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import loc from './loc.js'
 Vue.use(Vuex)
 
 let lifeData = {}
@@ -69,6 +69,9 @@ const store = new Vuex.Store({
     }
   },
   actions: {
+  },
+  modules:{
+    loc
   }
 })
 

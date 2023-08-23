@@ -3,7 +3,7 @@
   <view class="">
     <view class="flex justify-between padding align-center">
       <view class="">
-        您好,
+        当前位置：{{city}}
         <view class="text-xl">
           千峰互联
         </view>
@@ -91,6 +91,11 @@
       return {
         cateList: [],
         jobList: []
+      }
+    },
+    computed:{
+      city(){
+        return this.$store.state.loc.city
       }
     },
     onLoad() {
