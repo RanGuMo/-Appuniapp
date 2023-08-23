@@ -31,7 +31,12 @@
 
     <!-- 九宫格 -->
     <view class="cu-list grid col-4 no-border">
-      <view class="cu-item" v-for='item in cateList' :key="item.objectId">
+      <view
+       class="cu-item" 
+       v-for='item in cateList' 
+       :key="item.objectId"
+       @click="handleJobList(item)"
+       >
         <view class="text-center">
           <image class="grid-icon" :src="item.icon" mode="heightFix"></image>
           <text>{{item.name}}</text>
@@ -121,7 +126,15 @@
       })
     },
     methods: {
-
+        handleJobList({name}){
+          uni.setStorage({
+            key:'cateName',
+            data:name
+          })
+          uni.switchTab({
+            url:'/pages/company/company'
+          })
+        }
     }
   }
 </script>

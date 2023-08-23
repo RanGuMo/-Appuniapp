@@ -14,7 +14,8 @@
     data() {
       return {
         jobList: [],
-        page: 1
+        page: 1,
+        cateName: ''
       }
     },
     onLoad() {
@@ -24,19 +25,31 @@
       // })
       this.fetchData()
     },
+    onShow() {
+      uni.getStorage({
+        key: 'cateName',
+        success:({data}) => {
+          console.log(data,'提取',this);
+          this.jobList = []
+          this.page = 1
+          this.cateName = data
+          this.fetchData(data)
+        }
+      })
+    },
     // 下拉加载更多内容，触底就弹出提示
     onReachBottom() {
       console.log('触底了');
-      this.fetchData()
+      this.fetchData(this.cateName);
     },
     onPullDownRefresh() { //1.先在pages中开启下拉刷新功能
-      this.jobList = []
+      this.jobList = [];
       this.page = 1;
-      this.fetchData() //1.1 调用获取数据的方法
+      this.fetchData(); //1.1 调用获取数据的方法
     },
     methods: {
-      fetchData() {
-        jobGet(this.page).then(res => {
+      fetchData(name) {
+        jobGet(this.page,name).then(res => {
           uni.stopPullDownRefresh() //1.3获取到数据后关闭下拉刷新
           let {
             results
@@ -54,7 +67,7 @@
             icon: 'none'
           })
         })
-      }
+      },
     }
   }
 </script>
