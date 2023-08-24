@@ -29,6 +29,17 @@
           })
         }
       })
+
+      //初始化用户信息
+      try {
+        const value = uni.getStorageSync('fxjy-userinfo-v3');
+        if (value) {
+          this.$store.commit('user/initInfoMut', value)
+        }
+      } catch (e) {
+        // error
+        console.log('没有提取到用户信息');
+      }
     },
     onShow: function() {
       console.log('App Show')

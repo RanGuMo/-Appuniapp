@@ -5,7 +5,7 @@
       <view class="">
         当前位置：{{city}}
         <view class="text-xl">
-          千峰互联
+          <!-- 千峰互联 --> {{username}}
         </view>
       </view>
       <text class="iconfont icon-a-001_tongzhi text-xxl text-gray"></text>
@@ -31,12 +31,7 @@
 
     <!-- 九宫格 -->
     <view class="cu-list grid col-4 no-border">
-      <view
-       class="cu-item" 
-       v-for='item in cateList' 
-       :key="item.objectId"
-       @click="handleJobList(item)"
-       >
+      <view class="cu-item" v-for='item in cateList' :key="item.objectId" @click="handleJobList(item)">
         <view class="text-center">
           <image class="grid-icon" :src="item.icon" mode="heightFix"></image>
           <text>{{item.name}}</text>
@@ -62,7 +57,7 @@
         <job-item v-for="item in jobList" :jobdata="item" class="margin-right-sm" />
       </view>
     </scroll-view>
-   <!-- <view class="padding-sm flex flex-wrap justify-between">
+    <!-- <view class="padding-sm flex flex-wrap justify-between">
       <job-item v-for="item in 2" />
     </view> -->
     <!-- 最新岗位 -->
@@ -93,9 +88,16 @@
         jobList: []
       }
     },
-    computed:{
-      city(){
+    computed: {
+      city() {
         return this.$store.state.loc.city
+      },
+      username() {
+        let {
+          userInfo
+        } = this.$store.state.user
+        let name = userInfo ? userInfo.username : '游客访问'
+        return name
       }
     },
     onLoad() {
@@ -131,15 +133,17 @@
       })
     },
     methods: {
-        handleJobList({name}){
-          uni.setStorage({
-            key:'cateName',
-            data:name
-          })
-          uni.switchTab({
-            url:'/pages/company/company'
-          })
-        }
+      handleJobList({
+        name
+      }) {
+        uni.setStorage({
+          key: 'cateName',
+          data: name
+        })
+        uni.switchTab({
+          url: '/pages/company/company'
+        })
+      }
     }
   }
 </script>
