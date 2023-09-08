@@ -21,6 +21,9 @@ export default {
 					key:'fxjy-userinfo-v3',
 					data:res.data
 				})
+        uni.switchTab({ //登录成功，跳转到首页
+          url:'/pages/home/home'
+        })
 				
 			})
 		}

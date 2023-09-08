@@ -182,7 +182,7 @@ import { userRegister } from '../../api/user'
       handleLogin() {
         // console.log(this.info);
         if (this.currentModeIndex == 0) { //表示点击了登录按钮
-          this.$store.dispatch('user/userLoginAction', this.info)
+          this.$store.dispatch('user/userLoginAction', this.info);
         } else { //点击注册按钮
            userRegister(this.info)
         }
