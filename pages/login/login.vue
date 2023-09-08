@@ -11,11 +11,14 @@
     <view class="login">
       <!-- 顶部背景图片-->
       <view class="login__bg login__bg--top">
-        <image class="bg" src="https://tnuiimage.tnkjapp.com/login/1/login_top2.jpg" mode="widthFix"></image>
+        <!-- <image class="bg" src="https://tnuiimage.tnkjapp.com/login/1/login_top2.jpg" mode="widthFix"></image> -->
+         <image class="bg" src="@/static/img/login_top2.jpg" mode="widthFix"></image>
       </view>
       <view class="login__bg login__bg--top">
-        <image class="rocket rocket-sussuspension" src="https://tnuiimage.tnkjapp.com/login/1/login_top3.png"
-          mode="widthFix"></image>
+      <!--  <image class="rocket rocket-sussuspension" src="https://tnuiimage.tnkjapp.com/login/1/login_top3.png"
+          mode="widthFix"></image> -->
+          <image class="rocket rocket-sussuspension" src="@/static/img/login_top3.png"
+            mode="widthFix"></image>
       </view>
 
       <view class="login__wrapper">
@@ -71,11 +74,11 @@
                 <view class="tn-icon-phone"></view>
               </view>
               <view class="login__info__item__input__content">
-                <input maxlength="20" placeholder-class="input-placeholder" placeholder="请输入注册手机号码" />
+                <input v-model='info.username' maxlength="20" placeholder-class="input-placeholder" placeholder="请输入注册手机号码" />
               </view>
             </view>
 
-            <view
+          <!--  <view
               class="login__info__item__input tn-flex tn-flex-direction-row tn-flex-nowrap tn-flex-col-center tn-flex-row-left">
               <view class="login__info__item__input__left-icon">
                 <view class="tn-icon-code"></view>
@@ -87,7 +90,7 @@
                 <tn-button backgroundColor="#01BEFF" fontColor="#FFFFFF" size="sm" padding="5rpx 10rpx" width="100%"
                   shape="round">{{ tips }}</tn-button>
               </view>
-            </view>
+            </view> -->
 
             <view
               class="login__info__item__input tn-flex tn-flex-direction-row tn-flex-nowrap tn-flex-col-center tn-flex-row-left">
@@ -95,7 +98,7 @@
                 <view class="tn-icon-lock"></view>
               </view>
               <view class="login__info__item__input__content">
-                <input :password="!showPassword" placeholder-class="input-placeholder" placeholder="请输入登录密码" />
+                <input v-model='info.password' :password="!showPassword" placeholder-class="input-placeholder" placeholder="请输入登录密码" />
               </view>
               <view class="login__info__item__input__right-icon" @click="showPassword = !showPassword">
                 <view :class="[showPassword ? 'tn-icon-eye' : 'tn-icon-eye-hide']"></view>
@@ -147,6 +150,7 @@
 
 <script>
   import template_page_mixin from '@/libs/mixin/template_page_mixin.js'
+import { userRegister } from '../../api/user'
   export default {
     name: 'login-demo-1',
     mixins: [template_page_mixin],
@@ -180,7 +184,7 @@
         if (this.currentModeIndex == 0) { //表示点击了登录按钮
           this.$store.dispatch('user/userLoginAction', this.info)
         } else { //点击注册按钮
-         
+           userRegister(this.info)
         }
       },
       // 切换模式
