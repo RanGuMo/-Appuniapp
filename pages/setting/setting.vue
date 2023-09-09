@@ -11,14 +11,14 @@
       <view class="margin-bottom-sm">
         姓名
       </view>
-      <custom-input placeholder='请输入姓名'/>
+      <custom-input v-model="name" placeholder='请输入姓名' icon="icon-wode1"/>
     </view>
     
     <view class="padding">
       <view class="margin-bottom-sm">
         手机号
       </view>
-      <custom-input placeholder='请输入手机号'/>
+      <custom-input v-model="phone" placeholder='请输入手机号' icon="icon-youxiang"/>
     </view>
     
     <view class="padding">
@@ -30,7 +30,7 @@
     
     <view class="flex padding justify-between save-cont" >
       <button class="cu-btn  lg">取消</button>
-      <button class="cu-btn bg-orange lg">保存</button>
+      <button class="cu-btn bg-orange lg" @click="handleSave">保存</button>
     </view>
     
   </view>
@@ -40,11 +40,15 @@
   export default {
     data() {
       return {
-        
+        name:'张三丰',
+        phone:'18269269001',
+        resume:'简历'
       }
     },
     methods: {
-      
+      handleSave(){
+        console.log(this.name);
+      }
     }
   }
 </script>

@@ -1,7 +1,7 @@
 <template>
 	<view class="custom-input flex align-center padding-lr">
 		<text class="iconfont margin-right" :class="icon"></text>
-		<input type="text" :placeholder="placeholder"/>
+		<input type="text" v-bind:value="value" @input="handleInput" :placeholder="placeholder"/>
 	</view>
 </template>
 
@@ -16,8 +16,16 @@
 			icon:{
 				type:String,
 				default:'icon-a-001_sousuo'
-			}
+			},
+      value:{
+        type:String,
+      }
 		},
+    methods:{
+      handleInput(e){
+        this.$emit('input',e.target.value)
+      }
+    },
 		data() {
 			return {
 				
