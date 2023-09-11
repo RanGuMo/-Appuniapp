@@ -11,21 +11,25 @@
       <view class="margin-bottom-sm">
         姓名
       </view>
-      <custom-input v-model="name" placeholder='请输入姓名' icon="icon-wode1"/>
+      <custom-input v-model="info.name" placeholder='请输入姓名' icon="icon-wode1"/>
     </view>
     
     <view class="padding">
       <view class="margin-bottom-sm">
         手机号
       </view>
-      <custom-input v-model="phone" placeholder='请输入手机号' icon="icon-youxiang"/>
+      <custom-input v-model="info.phone" placeholder='请输入手机号' icon="icon-youxiang"/>
     </view>
     
     <view class="padding">
       <view class="margin-bottom-sm">
         简历
       </view>
-      <button class="cu-btn line-orange block lg">上传简历</button>
+      <!-- 进度条 -->
+      <view v-if="step!==0" class="cu-progress radius striped active">
+          <view class="bg-orange" :style="[{ width:step+'%'}]">{{step}}%</view>
+      </view>
+      <button class="cu-btn line-orange block lg" @click="handleUpload">上传简历</button>
     </view>
     
     <view class="flex padding justify-between save-cont" >
@@ -37,17 +41,45 @@
 </template>
 
 <script>
+  import {pathToBase64} from '../../js_sdk/mmmm-image-tools/index.js'
+  import CloudSDK from 'leancloud-storage'
   export default {
     data() {
       return {
-        name:'张三丰',
-        phone:'18269269001',
-        resume:'简历'
+        info:{
+          name:'张三丰',
+          phone:'18269269001',
+          resume:'',
+        },
+        step:0,
       }
     },
     methods: {
       handleSave(){
         console.log(this.name);
+      },
+      // 上传简历
+      handleUpload(){
+          uni.chooseFile({
+              success: async(res) => {
+                  console.log(res);
+                  // this.show = true
+                  this.step = 40
+                  let localFileUri = res.tempFilePaths[0] //本地临时资源路径
+                  let base64  = await pathToBase64(localFileUri) // url转base64
+                  this.step = 60
+                  const file = new CloudSDK.File('resume.pdf', {base64}) //构建资源
+                  this.step = 90
+                  let res1 = await file.save() //保存资源
+                  console.log(res1,111);
+                  this.step = 100
+                  this.info.resume = res1.attributes.url
+                  uni.showToast({
+                      title:'上传成功',
+                      icon:'none'
+                  })
+              }
+          })
       }
     }
   }

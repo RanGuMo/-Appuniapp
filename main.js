@@ -20,6 +20,15 @@ import CustomInput from './components/custom-input.vue'
 Vue.component('job-item',JobItem)
 Vue.component('custom-input',CustomInput)
 
+//LeanCloudSDK初始化(web端，如果需要打包小程序，则需要处理兼容问题）
+import CloudSDK from 'leancloud-storage'
+import { BASE, ID, KEY } from './config';
+CloudSDK.init({
+  appId: ID,
+  appKey: KEY,
+  serverURL:BASE
+});
+
 const app = new Vue({
   store,
   ...App
