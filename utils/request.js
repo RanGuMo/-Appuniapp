@@ -20,7 +20,7 @@ http.interceptors.request.use((config) => { // 可使用async await 做异步操
 http.interceptors.response.use((response) => { /* 对响应成功做点什么 可使用async await 做异步操作*/
   console.log('响应拦截器',response)
   let {url } = response.config;
-  if(url=='login' || url=='users'){ //如果是登录或者是注册的接口
+  if(url=='login' || url=='users' || url.includes('users')!=-1){ //如果是登录或者是注册的接口
     uni.showToast({
       title:'操作成功'
     })

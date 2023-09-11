@@ -111,7 +111,7 @@
               class="icon1__item--icon tn-flex tn-flex-row-center tn-flex-col-center tn-cool-bg-color-2 tn-color-white">
               <view class="tn-icon-set-fill"></view>
             </view>
-            <view class="tn-margin-left-sm tn-flex-1">信息完善</view>
+            <view @click="handleSetting" class="tn-margin-left-sm tn-flex-1">信息完善</view>
             <!-- <view class="tn-margin-left-sm tn-color-gray">懒</view> -->
           </view>
         </tn-list-cell>
@@ -226,7 +226,16 @@
         return this.$store.state.user.userInfo;
       }
     },
-    methods: {}
+    methods: {
+      handleSetting(){
+         let url = this.userInfo?'/pages/setting/setting':'/pages/login/login';
+         uni.navigateTo({
+           url
+         })
+      }
+     
+      
+    }
   }
 </script>
 

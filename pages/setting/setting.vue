@@ -43,6 +43,7 @@
 <script>
   import {pathToBase64} from '../../js_sdk/mmmm-image-tools/index.js'
   import CloudSDK from 'leancloud-storage'
+  import { userUpdate } from '../../api/user'
   export default {
     data() {
       return {
@@ -54,9 +55,22 @@
         step:0,
       }
     },
+    computed: {
+      userInfo() {
+        return this.$store.state.user.userInfo;
+      }
+    },
     methods: {
-      handleSave(){
-        console.log(this.name);
+    async  handleSave(){
+        // console.log(this.info);
+        let {objectId,sessionToken} = this.userInfo;  
+        let res = await userUpdate(objectId,sessionToken,this.info);console.log(res);
+        if(res.statusCode===200){
+          uni.switchTab({ //修改用户信息成功，跳转到个人中心页
+            url:'/pages/mine/mine'
+          })
+        }
+        
       },
       // 上传简历
       handleUpload(){
