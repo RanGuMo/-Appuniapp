@@ -37,7 +37,7 @@
 </template>
  -->
  <template>
- 	<view class="job-item padding-sm margin-bottom-sm" :class="cType">
+ 	<view @click="handleDetail" class="job-item padding-sm margin-bottom-sm" :class="cType">
  		<view class="flex justify-between align-center">
  			<view class="flex align-center">
  				<image class="cu-avatar round  margin-right-sm" :src="jobdata.brandLogo" mode=""></image>
@@ -89,7 +89,14 @@
       return {
 
       };
-    }
+    },
+    methods: {
+      handleDetail() {
+        uni.navigateTo({
+          url:`/pages/detail/detail?id=${this.jobdata.objectId}`
+        })
+      }
+    },
   }
 </script>
 
