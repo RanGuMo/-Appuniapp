@@ -35,3 +35,13 @@ export const jobDetailGet = (id)=>{
 export const jobPost = (joinData)=>{
 	return request.post(`classes/join`,joinData)
 }
+
+// 报名状态查询
+export const joinStateGet = (userId,jobId)=>{
+	return request.get('classes/ReactJoin',{
+		where:{
+			userId,
+			jobId
+		}
+	})
+}

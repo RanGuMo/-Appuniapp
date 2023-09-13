@@ -1,5 +1,5 @@
 <template>
-  <view>
+  <view v-if="detail">
     <view class="text-center">
       <image class="cu-avatar round xl margin-tb" :src="detail.brandLogo" mode=""></image>
       <view class="text-lg">
@@ -82,7 +82,11 @@
     </view>
 
     <view class="padding cu-bar foot">
-      <button @click="handleJoin" class="cu-btn bg-orange lg block">立即报名</button>
+      <button v-if="state==0" @click="handleJoin" class="cu-btn bg-orange lg block">立即报名</button>
+      <button v-if="state==1" class="cu-btn bg-grey lg block">等待审核</button>
+      <button v-if="state==2" class="cu-btn bg-brown lg block">已读简历</button>
+      <button v-if="state==3" class="cu-btn bg-cyan lg block">预约面试</button>
+      <button v-if="state==4" class="cu-btn bg-red lg block">已经拒绝</button>
     </view>
 
 
@@ -93,7 +97,8 @@
 <script>
   import {
     jobDetailGet,
-    jobPost
+    jobPost,
+    joinStateGet
   } from '../../api/job.js'
 
   import {
@@ -104,7 +109,8 @@
       return {
         detail: {},
         distance: 0,
-        jobLocation: []
+        jobLocation: [],
+        state:0,
       }
     },
     computed: {
@@ -127,11 +133,9 @@
         let address = cityName + areaDistrict
         this.getDist(address, city)
 
-
-
-
-
       })
+  
+      this.checkState(options.id);// 获取报名状态
     },
     methods: {
       // 根据岗位地址以及用户地址获取 两者之间 的距离
@@ -207,7 +211,18 @@
           salaryDesc,
           status: 1
         }).then(res=>{
+          // 报名成功，修改状态为1
+          this.state = 1;
           console.log(res,"发起报名请求，保存数据到数据库中");
+        })
+      },
+      // 获取报名状态
+      checkState(jobid){
+        joinStateGet(this.userInfo.userid,jobid).then(res=>{
+          let {results } = res.data;
+          if(results.length){
+            this.state = results[0].state //用户端报名状态保持跟后端一致
+          }
         })
       }
 
