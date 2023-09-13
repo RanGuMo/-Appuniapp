@@ -54,7 +54,16 @@
       }
 
     }
-  ],
+      ,{
+            "path" : "pages/my-job/my-job",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的岗位",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",

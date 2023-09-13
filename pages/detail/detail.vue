@@ -71,7 +71,8 @@
         公司位置
       </view>
       <!-- 地图组件 -->
-      <map class="gd-map" :latitude="jobLocation[1]" :longitude="jobLocation[0]" :markers="[{
+      <map class="gd-map" :latitude="jobLocation[1]" :longitude="jobLocation[0]" 
+      :markers="[{
         id:1,
         longitude:jobLocation[0],
         latitude:jobLocation[1],
@@ -110,7 +111,7 @@
         detail: {},
         distance: 0,
         jobLocation: [],
-        state:0,
+        state: 0,
       }
     },
     computed: {
@@ -134,8 +135,8 @@
         this.getDist(address, city)
 
       })
-  
-      this.checkState(options.id);// 获取报名状态
+
+      this.checkState(options.id); // 获取报名状态
     },
     methods: {
       // 根据岗位地址以及用户地址获取 两者之间 的距离
@@ -210,17 +211,19 @@
           areaDistrict,
           salaryDesc,
           status: 1
-        }).then(res=>{
+        }).then(res => {
           // 报名成功，修改状态为1
           this.state = 1;
-          console.log(res,"发起报名请求，保存数据到数据库中");
+          console.log(res, "发起报名请求，保存数据到数据库中");
         })
       },
       // 获取报名状态
-      checkState(jobid){
-        joinStateGet(this.userInfo.userid,jobid).then(res=>{
-          let {results } = res.data;
-          if(results.length){
+      checkState(jobid) {
+        joinStateGet(this.userInfo.userid, jobid).then(res => {
+          let {
+            results
+          } = res.data;
+          if (results.length) {
             this.state = results[0].state //用户端报名状态保持跟后端一致
           }
         })
