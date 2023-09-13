@@ -2,6 +2,12 @@
   <view class="">
     <tn-tabs :list="list" :isScroll="false" :current="current" name="tab-name" @change="change"></tn-tabs>
     
+    <!-- 没有获取到数据就展示这个 -->
+    <view class="padding margin" v-if="!jobList.length">
+      <tn-empty mode="data" icon="https://tuniao.ahuaaa.cn/componentsPage/static/images/empty/data.jpg"
+        :imgWidth="300"></tn-empty>
+    </view>
+    <!-- 获取到数据就展示下面这个 -->
     <view class="padding-sm flex flex-wrap justify-between">
       <job-item v-for="item in jobList" :jobdata="item" />
     </view>
@@ -42,6 +48,9 @@ import { jobGetList } from '../../api/job';
     methods: {
       change(index) {
         this.current = index;
+        jobGetList(this.userInfo.objectId,index).then(res=>{
+          this.jobList = res.data.results
+        })
       }
     }
   }

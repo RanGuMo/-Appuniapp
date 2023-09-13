@@ -101,7 +101,7 @@
               class="icon1__item--icon tn-flex tn-flex-row-center tn-flex-col-center tn-cool-bg-color-1 tn-color-white">
               <view class="tn-icon-like-fill"></view>
             </view>
-            <view class="tn-margin-left-sm tn-flex-1">我的收藏</view>
+            <view @click="handleMyJob" class="tn-margin-left-sm tn-flex-1">我的岗位</view>
             <!-- <view class="tn-margin-left-sm tn-color-blue tn-icon-copy-fill"></view> -->
           </view>
         </tn-list-cell>
@@ -232,6 +232,12 @@
          uni.navigateTo({
            url
          })
+      },
+      handleMyJob(){
+        let url = this.userInfo?'/pages/my-job/my-job':'/pages/login/login';
+        uni.navigateTo({
+          url
+        })
       }
      
       

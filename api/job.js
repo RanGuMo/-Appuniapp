@@ -47,12 +47,14 @@ export const joinStateGet = (userId, jobId) => {
 }
 
 // 查询报名列表
-export const jobGetList = (userId) => {
+export const jobGetList = (userId,state=0) => {
+  let where = {userId}
+  if(state!=0){
+    where.state = state
+  }
   return request.get('classes/join', {
     params: {
-      where: {
-        userId
-      },
+      where
     }
   })
 }
