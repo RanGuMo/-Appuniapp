@@ -70,7 +70,15 @@
       <view class="margin-bottom-sm">
         公司位置
       </view>
-      地图组件
+      <!-- 地图组件 -->
+      <map class="gd-map" :latitude="jobLocation[1]" :longitude="jobLocation[0]" :markers="[{
+        id:1,
+        longitude:jobLocation[0],
+        latitude:jobLocation[1],
+        iconPath:'../../static/img/loc.png',
+        width:50,
+        height:50
+      }]"></map>
     </view>
 
     <view class="padding cu-bar foot">
@@ -86,13 +94,16 @@
   import {
     jobDetailGet
   } from '../../api/job.js'
-  
-  import {getDistance} from '../../utils/tools.js'
+
+  import {
+    getDistance
+  } from '../../utils/tools.js'
   export default {
     data() {
       return {
-        detail: null,
-        distance: 0
+        detail: {},
+        distance: 0,
+        jobLocation: []
       }
     },
     computed: {
@@ -106,10 +117,16 @@
         let {
           cityName,
           areaDistrict,
-          city
+          city,
+          businessDistrict
         } = res.data
         let address = cityName + areaDistrict
         this.getDist(address, city)
+
+     
+
+
+
       })
     },
     methods: {
@@ -117,7 +134,7 @@
       getDist(address, city) {
         //计算岗位距离
         let url =
-          `https://restapi.amap.com/v3/geocode/geo?key=b14931ccb50c276e1f79c1b4f42f6feb&address=${address}&city=${city}`
+          `https://restapi.amap.com/v3/geocode/geo?key=e0119d3cbd6eb284068484cadeb50e07&address=${address}&city=${city}`
         uni.request({
           url,
           success: (res) => {
@@ -125,8 +142,10 @@
               location
             } = res.data.geocodes[0]
             location = location.split(',') //岗位经纬度
-            let n = getDistance(location[1], location[0], this.lnglat[1], this.lnglat[0])
+            this.jobLocation = location //获取经纬度，用于map地图显示
+            let n = getDistance(location[1]*1, location[0]*1, this.lnglat[1]*1, this.lnglat[0]*1)
             this.distance = n.toFixed(1) // 取一位小数
+            console.log(n, this.distance);
           }
         })
       }
@@ -144,5 +163,11 @@
 
   .cu-tag {
     margin: 10rpx 10rpx 0 0;
+  }
+
+  .gd-map {
+    width: 100%;
+    height: 300rpx;
+    // border: 1px solid red;
   }
 </style>
