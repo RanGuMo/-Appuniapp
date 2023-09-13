@@ -30,3 +30,8 @@ export const jobGet = (page=1,name)=>{
 export const jobDetailGet = (id)=>{
 	return request.get(`classes/job/${id}`)
 }
+
+// 岗位报名
+export const jobPost = (joinData)=>{
+	return request.post(`classes/join`,joinData)
+}

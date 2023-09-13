@@ -82,7 +82,7 @@
     </view>
 
     <view class="padding cu-bar foot">
-      <button class="cu-btn bg-orange lg block">立即报名</button>
+      <button @click="handleJoin" class="cu-btn bg-orange lg block">立即报名</button>
     </view>
 
 
@@ -92,7 +92,8 @@
 
 <script>
   import {
-    jobDetailGet
+    jobDetailGet,
+    jobPost
   } from '../../api/job.js'
 
   import {
@@ -109,6 +110,9 @@
     computed: {
       lnglat() {
         return this.$store.state.loc.lnglat //用户位置 
+      },
+      userInfo() {
+        return this.$store.state.user.userInfo
       }
     },
     onLoad(options) {
@@ -123,7 +127,7 @@
         let address = cityName + areaDistrict
         this.getDist(address, city)
 
-     
+
 
 
 
@@ -143,10 +147,67 @@
             } = res.data.geocodes[0]
             location = location.split(',') //岗位经纬度
             this.jobLocation = location //获取经纬度，用于map地图显示
-            let n = getDistance(location[1]*1, location[0]*1, this.lnglat[1]*1, this.lnglat[0]*1)
+            let n = getDistance(location[1], location[0], this.lnglat[1], this.lnglat[0])
             this.distance = n.toFixed(1) // 取一位小数
             console.log(n, this.distance);
           }
+        })
+      },
+      // 立即报名 点击事件
+      handleJoin() {
+        // 如果没有登录，引导到登录页面
+        if (!this.userInfo) {
+          uni.navigateTo({
+            url: '/pages/login/login'
+          })
+          return
+        }
+        // 信息不完善，引导完善个人信息
+        let {
+          name,
+          phone,
+          resume
+        } = this.userInfo;
+        if (!name || !phone || !resume) {
+          uni.showModal({
+            title: '个人信息不完善',
+            content: '请先完善个人信息后再进行报名操作',
+            confirmColor: 'orange',
+            success: function(res) {
+              if (res.confirm) {
+                uni.navigateTo({
+                  url: '/pages/setting/setting'
+                })
+              }
+            }
+
+          })
+          return
+        }
+
+        // 发起报名请求，保存数据到数据库中
+        let userId = this.userInfo.objectId
+        let jobId = this.detail.objectId
+        let {
+          brandLogo,
+          brandName,
+          jobName,
+          cityName,
+          areaDistrict,
+          salaryDesc
+        } = this.detail
+        jobPost({
+          userId,
+          jobId,
+          brandLogo,
+          brandName,
+          jobName,
+          cityName,
+          areaDistrict,
+          salaryDesc,
+          status: 1
+        }).then(res=>{
+          console.log(res,"发起报名请求，保存数据到数据库中");
         })
       }
 

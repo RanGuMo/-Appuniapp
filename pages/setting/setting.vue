@@ -66,9 +66,17 @@
         let {objectId,sessionToken} = this.userInfo;  
         let res = await userUpdate(objectId,sessionToken,this.info);console.log(res);
         if(res.statusCode===200){
-          uni.switchTab({ //修改用户信息成功，跳转到个人中心页
-            url:'/pages/mine/mine'
+          let userInfo = {...this.userInfo,...this.info}
+          this.$store.commit('initInfoMut',userInfo) //状态机存储
+          uni.setStorage({ //本地持久化存储
+          	key:'fxjy-userinfo-v3',
+          	data:userInfo
           })
+          uni.navigateBack({delta:1}) //返回上一级
+          
+          // uni.switchTab({ //修改用户信息成功，跳转到个人中心页
+          //   url:'/pages/mine/mine'
+          // })
         }
         
       },
